@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Generative UI - Orb Animation [pixi.js] + Frosty Elements ❄️</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!-- Canvas -->
+<canvas class="orb-canvas"></canvas>
+<!-- Overlay -->
+<div class="overlay">
+  <!-- Overlay inner wrapper -->
+  <div class="overlay__inner">
+    <!-- Title -->
+    <h1 class="overlay__title">
+      Hey, would you like to learn how to create a
+      <span class="text-gradient">generative</span> UI just like this?
+    </h1>
+    <!-- Description -->
+    <p class="overlay__description">
+      In this tutorial we will be creating a generative “orb” animation
+      using pixi.js, picking some lovely random colors and pulling it all
+      together in a nice frosty UI.
+      <strong>We're gonna talk accessibility, too.</strong>
+    </p>
+    <!-- Buttons -->
+    <div class="overlay__btns">
+
+      <button class="overlay__btn overlay__btn--transparent">
+        <a href="https://georgefrancis.dev/writing/create-a-generative-landing-page-and-webgl-powered-background/" target="_blank">
+
+          View Tutorial
+        </a>
+      </button>
+
+      <button class="overlay__btn overlay__btn--colors">
+        <span>Randomise Colors</span>
+        <span class="overlay__btn-emoji">🎨</span>
+      </button>
+
+
+      <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  chat-icon="https://cdn.glitch.global/802495e6-e871-4f39-8f2b-37dc1cf7d75f/rect2.png"
+             position: "relative"
+top: "40px" 
+              left: "40px"
+              
+  intent="WELCOME"
+  chat-title="MahabharathFact!!🙏"
+  agent-id="491cc2f1-02b1-4d3f-b4bf-995b3b11914b"
+  language-code="es"
+                allow="microphone;"
+ 
+></df-messenger>
+      
+      
+      <style>
+  df-messenger {
+ 
+   --df-messenger-button-titlebar-color: #00000;
+
+  
+   --df-messenger-send-icon: #00000;
+ 
+  }
+</style>
+
+
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script type="module" src="./script.js"></script>
+
+</body>
+</html>
