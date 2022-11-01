@@ -67,6 +67,653 @@ top: "40px"
   }
 </style>
 
+      
+      
+      
+      
+      
+      
+      
+      <!--     <link rel="stylesheet" href="./lib/main.css" />
+    <script src="./lib/main.js"></script> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css"
+    />
+    <!-- <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    /> -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js"></script>
+    <!-- <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script> -->
+    <!-- <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script> -->
+    <!-- calendar 1 time table -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendar");
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+        //   height: "auto",
+          expandRows: true,
+          slotMinTime: "08:00",
+          slotMaxTime: "19:00",
+          headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+          },
+
+          initialView: "timeGridWeek",
+          businessHours: true, // display business hours
+          allDay: false,
+          // initialDate: "2020-06-12",
+          navLinks: true, // can click day/week names to navigate views
+          // editable: true,
+          // selectable: true,
+          nowIndicator: true,
+          dayMaxEvents: true, // allow "more" link when too many events
+          weekNumbers: true,
+          weekNumberCalculation: 'ISO',
+
+          businessHours: [
+            // specify an array instead
+            {
+              daysOfWeek: [1, 2, 3], // Monday, Tuesday, Wednesday
+              startTime: "08:00", // 8am
+              endTime: "19:00", // 6pm
+            },
+            {
+              daysOfWeek: [4, 5], // Thursday, Friday
+              startTime: "08:00", // 10am
+              endTime: "19:00", // 6pm
+            },
+
+            {
+              daysOfWeek: [6], // saturday
+              startTime: "08:00", // 8am
+              endTime: "12:00", // 12noon
+            },
+          ],
+          // THIS KEY WON'T WORK IN PRODUCTION!!!
+          // To make your own Google API key, follow the directions here:
+          // http://fullcalendar.io/docs/google_calendar/
+          googleCalendarApiKey: "AIzaSyBH3yaA20btUmQHud9cJcgQmwBG_5xw4k0",
+
+          eventSources: [
+            {
+              googleCalendarId:
+                "bf9dd9c84326d50e516f46a33fb177ec6076e19bcc928566d8a07c7f81f85633@group.calendar.google.com",
+              color: "#FFB332", // an option!
+              textColor: "white", // an option!
+            },
+            {
+              googleCalendarId:
+                "bf9dd9c84326d50e516f46a33fb177ec6076e19bcc928566d8a07c7f81f85633@group.calendar.google.com",
+              className: "nice-event",
+              color: "#31C4D1", // an option!
+              textColor: "white", // an option!
+            },
+          ],
+
+          eventClick: function (info, jsEvent, view) {
+            var title = info.event.title;
+            var locat = info.event.extendedProps.location;
+            var descr = info.event.extendedProps.description;
+
+            // var url = info.event.url;
+            // $("#modalTitle").html(title);
+            // $("#locatUrl").attr("href", locat);
+            // $("#modalBody2").html(descr);
+            // $("#eventUrl").attr("href", url);
+            // $("#fullCalModal").modal();
+            document.getElementById("modalTitle").innerHTML = title;
+            document.getElementById("locatUrl").setAttribute("href", locat);
+            document.getElementById("modalBody2").innerHTML = descr;
+            // document.getElementById("eventUrl").setAttribute("href", url);
+            document.getElementById("fullCalModal").style.display = "block";
+            document.getElementById("closeButton").addEventListener("click", function(){
+                document.getElementById("fullCalModal").style.display = "none";
+            });
+
+            info.jsEvent.preventDefault();
+            
+            //opening tab in the new tab with the help of js
+            document.getElementById("eventUrl").addEventListener("click", function(){
+                // window.open(info.event.url); 
+              // setTimeout(window.open(info.event.url, "CNN_WindowName"), 1000);
+              setTimeout(window.open(info.event.url, "_blank","minWidth=320,minHeight=568"), 1000);
+            });
+            
+            //adding a link when other options does not work
+            var url = info.event.url;
+            document.getElementById("eventlink").setAttribute("href", url);
+             
+            info.jsEvent.preventDefault();
+            
+            //copied from old version
+                    // opens events in a popup window
+                    // window.open(
+                    //   arg.event.url,
+                    //   "_blank",
+                    //   "minWidth=320,minHeight=568"
+                    // );
+
+                    // prevents current tab from navigating
+                    // arg.jsEvent.preventDefault();
+            //copied from old version
+
+            console.log(info);
+            // console.log(descr);
+            // console.log(url);
+          },
+
+//             eventClick: function (info) {
+//               alert(
+//                 "Info: " +
+//                   info.event.title +
+//                   "\nAll the related information will be opened in new tab.\nIf you have Google Account then you will be able to add the information to your Google Calendar.\nJust wait '5 seconds' before pressing okay."
+//               );
+//               // alert(
+//               //   "Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY
+//               // );
+//               // alert("View: " + info.view.type);
+
+//               // change the border color just for fun
+//               info.el.style.borderColor = "red";
+
+//               window.open(
+//                 info.event.url,
+//                 "",
+//                 "google-calendar-event",
+//                 "width=700,height=600"
+//               );
+
+//               console.log(info);
+
+//               info.jsEvent.preventDefault(); // don't navigate in main tab
+//             },
+
+//           eventClick: function (arg) {
+//             // opens events in a popup window
+//             window.create(
+//               arg.events.url,
+//               "incognito",
+//               "google-calendar-event",
+//               "width=700,height=600"
+//             );
+
+//             //arg.jsEvent.preventDefault(); // don't navigate in main tab
+//           },
+          
+//           eventClick: function (arg) {
+//                     // opens events in a popup window
+//                     window.open(
+//                       arg.event.url,
+//                       "_blank",
+//                       "minWidth=320,minHeight=568"
+//                     );
+
+//                     // prevents current tab from navigating
+//                     arg.jsEvent.preventDefault();
+//                     console.log(arg.event.url); 
+//                   },
+
+          loading: function (bool) {
+            document.getElementById("loading").style.display = bool
+              ? "block"
+              : "none";
+          },
+        });
+
+        calendar.render();
+      });
+    </script>
+
+    <!-- yearly calendar --- calendar 2 -->
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendarTwo");
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          // height: "auto",
+          expandRows: true,
+          slotMinTime: "08:00",
+          slotMaxTime: "19:00",
+          headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+          },
+
+          initialView: "dayGridMonth",
+          businessHours: true, // display business hours
+          allDay: false,
+          // initialDate: "2020-06-12",
+          navLinks: true, // can click day/week names to navigate views
+          // editable: true,
+          // selectable: true,
+          nowIndicator: true,
+          dayMaxEvents: true, // allow "more" link when too many events
+
+          businessHours: [
+            // specify an array instead
+            {
+              daysOfWeek: [1, 2, 3], // Monday, Tuesday, Wednesday
+              startTime: "08:00", // 8am
+              endTime: "19:00", // 6pm
+            },
+            {
+              daysOfWeek: [4, 5], // Thursday, Friday
+              startTime: "08:00", // 8am
+              endTime: "16:00", // 4pm
+            },
+
+            {
+              daysOfWeek: [6], // saturday
+              startTime: "08:00", // 8am
+              endTime: "12:00", // 12noon
+            },
+          ],
+          // THIS KEY WON'T WORK IN PRODUCTION!!!
+          // To make your own Google API key, follow the directions here:
+          // http://fullcalendar.io/docs/google_calendar/
+          googleCalendarApiKey: "AIzaSyBoQFM69FgPBhLsQubPTYF6-cNY1nx7Y18",
+
+          eventSources: [
+            {
+              googleCalendarId:
+                "36am28g6uirqbs42r8kt4jqim8@group.calendar.google.com",
+              color: "#FFB332", // an option!
+              textColor: "white", // an option!
+            },
+            {
+              googleCalendarId:
+                "5u7b2mcccep4to3mjeldqp4fa8@group.calendar.google.com",
+              className: "nice-event",
+              color: "#31C4D1", // an option!
+              textColor: "white", // an option!
+            },
+          ],
+
+          eventClick: function (info, jsEvent, view) {
+            var title = info.event.title;
+            var locat = info.event.extendedProps.location;
+            var descr = info.event.extendedProps.description;
+            var url = info.event.url;
+
+            document.getElementById("modalTitle").innerHTML = title;
+            document.getElementById("locatUrl").setAttribute("href", locat);
+            document.getElementById("modalBody2").innerHTML = descr;
+            document.getElementById("eventUrl").setAttribute("href", url);
+            document.getElementById("fullCalModal").display = block;
+            // $("#modalTitle").html(title);
+            // $("#locatUrl").attr("href", locat);
+            // $("#modalBody2").html(descr);
+            // $("#eventUrl").attr("href", url);
+            //$("#fullCalModal").modal();
+
+            info.jsEvent.preventDefault();
+
+            console.log(info);
+            console.log(descr);
+          },
+
+          //   eventClick: function (info) {
+          //     alert(
+          //       "Info: " +
+          //         info.event.title +
+          //         "\nAll the related information will be opened in new tab.\nIf you have Google Account then you will be able to add the information to your Google Calendar.\nJust wait '5 seconds' before pressing okay."
+          //     );
+          //     // alert(
+          //     //   "Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY
+          //     // );
+          //     // alert("View: " + info.view.type);
+
+          //     // change the border color just for fun
+          //     info.el.style.borderColor = "red";
+
+          //     window.open(
+          //       info.event.url,
+          //       "",
+          //       "google-calendar-event",
+          //       "width=700,height=600"
+          //     );
+
+          //     console.log(info);
+
+          //     info.jsEvent.preventDefault(); // don't navigate in main tab
+          //   },
+
+          // eventClick: function (arg) {
+          //   // opens events in a popup window
+          //   window.create(
+          //     arg.events.url,
+          //     "incognito",
+          //     "google-calendar-event",
+          //     "width=700,height=600"
+          //   );
+
+          //   //arg.jsEvent.preventDefault(); // don't navigate in main tab
+          // },
+
+          loading: function (bool) {
+            document.getElementById("loading").style.display = bool
+              ? "block"
+              : "none";
+          },
+        });
+
+        calendar.render();
+      }); -->
+    </script>
+    <style>
+      body {
+        margin: 0 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+      
+      }
+
+      #loading {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      /* adding custom styles to calendar */
+
+      #calendar {
+
+        max-width: 3840px;
+        height:100vh;
+        /* margin: 0 auto; */
+        margin:0;
+        padding-left: 10%;
+
+        /* border:1px solid rgba(85, 85, 85, 0.699); */
+        border: 1px solid rgba(0, 0, 0, 0.11);
+        border-top:0;
+        /* increse the  border-top-left-radius to cover the top gap for the calendar*/
+      border-top-left-radius: 22px;
+      border-top-right-radius: 22px;
+
+      }
+
+      .fc .fc-toolbar.fc-header-toolbar {
+      margin-bottom: unset;
+      background-color: #FD5B2C;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding-top:18px;
+      padding-bottom:18px;
+       }
+
+       /* date header */
+        .fc .fc-toolbar-title {
+            font-size: 1em;
+            color:white;
+        }
+
+      /* prev - next buttons */
+      .fc .fc-button-primary {
+        /* color: #423839; */
+        color: #fff;
+        /* color: var(--fc-button-text-color,#fff); */
+        background-color: unset;
+        /* background-color: var(--fc-button-bg-color,#2C3E50); */
+        border: unset;
+        border-color: unset;
+        /* border-color: var(--fc-button-border-color,#2C3E50); */
+        /* opacity: 0.7; */
+        text-transform: capitalize;
+      }
+
+      .fc .fc-button-primary:disabled {
+        color: #fff;
+        /* color: var(--fc-button-text-color,#fff); */
+        background-color: #fd5b2c;
+        /* background-color: var(--fc-button-bg-color,#2C3E50); */
+        border-color: #fd5b2c;
+        /* border-color: var(--fc-button-border-color,#2C3E50); */
+        /* opacity: 0.4; */
+      }
+
+      .fc .fc-button-primary:not(:disabled).fc-button-active,
+      .fc .fc-button-primary:not(:disabled):active {
+        color: #fff;
+        /* color: var(--fc-button-text-color, #fff); */
+        background-color: #fd5b2c;
+        background-color: unset;
+        /* background-color: var(--fc-button-active-bg-color, #1a252f); */
+        border-color: unset;
+        border:unset;
+        /* border-color: var(--fc-button-active-border-color, #151e27); */
+        /* opacity: 0.7; */
+      }
+
+      .fc .fc-button-primary:hover {
+        color: #fff;
+        /* color: var(--fc-button-text-color, #fff); */
+        background-color: #423839;
+        background-color: unset;
+        /* background-color: var(--fc-button-hover-bg-color, #1e2b37); */
+        border-color: #423839;
+        border: unset;
+        /* border-color: var(--fc-button-hover-border-color, #1a252f); */
+      }
+
+      /* unnesssary border was applying afer you click */
+      .fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: var(--fc-button-active-bg-color, #1a252f);
+    background-color: unset;
+    border-color: var(--fc-button-active-border-color, #151e27);
+    border-color: unset;
+    border: unset;
+    }
+
+    /* padding to the header date nd day */
+    .fc .fc-timegrid-axis-cushion, .fc .fc-timegrid-slot-label-cushion {
+    padding: 0px 34px;
+    }
+
+    .fc .fc-col-header-cell-cushion {
+        display: inline-block;
+        padding: 30px 4px;
+    }
+
+    /* below style for that which shows week number and allday events - adding below style to centter it */
+    .fc .fc-timegrid-axis-frame {
+    justify-content: center;
+   }
+
+   .fc .fc-timegrid-axis-cushion {
+    max-width: 140px;
+    flex-shrink: 0;
+    text-transform: capitalize;
+   }
+
+
+
+      /* reducing the calenddar border color */
+      .fc-theme-standard td,
+      .fc-theme-standard th {
+        border: 1px solid rgba(0, 0, 0, 0.11);
+        /* border: 1px solid var(--fc-border-color,#ddd); */
+      }
+
+      /* thead date&day links */
+      .fc-scrollgrid-sync-inner > a {
+        color: #423839;
+      }
+
+      /* removing the broder that was in between the 10 t0 11  */
+      .fc .fc-timegrid-slot-minor {
+      border-top-style: unset;
+     }  
+
+      /* copy from script-tag below and past here */
+
+      /* backgrond color of all bussiness days accept new Date() = today*/
+      .fc .fc-non-business {
+        /* background: rgb(253, 231, 231); */
+         background-color: #fff;
+        content: "Holiday";
+        background-image: url(./stripe.svg);
+        /* background: var(--fc-non-business-color,rgba(215,215,215,.3)); */
+      }
+
+      /* backgrond color of  new Date() = today only allday-slot-bg-color*/
+      .fc .fc-daygrid-day.fc-day-today {
+        background-color: #fff;
+        content: "Holiday";
+        /* background-color: var(--fc-today-bg-color,rgba(255,220,40,.15)); */
+      }
+      /* backgrond color of  new Date() = today*/
+      .fc .fc-timegrid-col.fc-day-today {
+        background-color: #fff;
+        /* background-color: var(--fc-today-bg-color,rgba(255,220,40,.15)); */
+      }
+
+      /* each event source border color left is changed */
+      /* .fc-media-screen .fc-timegrid-event-harness {
+        position: absolute;
+        border-left: 2px solid #fd5b2c;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      } */
+    </style>
+    <script>
+      //       /* thead for the calendar */
+      // thead {
+      //   background-color: #fd5b2c;
+      //   /* background-color: var(--fc-button-active-bg-color, #1a252f); */
+      //   border-color: #fd5b2c;
+      //   /* border-color: var(--fc-button-active-border-color, #151e27); */
+      //   opacity: 0.7;
+      // }
+
+      // /* thead date&day links */
+      // .fc-scrollgrid-sync-inner > a {
+      //   color: #fff;
+      // }
+
+      // /* tbody left time column - "all-day" background*/
+      // .fc-timegrid-axis-frame {
+      //   background-color: #fd5b2c;
+      //   /* background-color: var(--fc-button-active-bg-color, #1a252f); */
+      //   border-color: #fd5b2c;
+      //   /* border-color: var(--fc-button-active-border-color, #151e27); */
+      //   opacity: 0.7;
+      // }
+
+      // /* tbody left time column - "all-day" link*/
+      // .fc-timegrid-axis-frame > span {
+      //   color: #fff;
+      // }
+
+      // /* tbody left time column - background*/
+      // .fc-timegrid-axis
+      //   > .fc-timegrid-col-frame
+      //   > .fc-timegrid-now-indicator-container {
+      //   background-color: #fd5b2c;
+      //   /* background-color: var(--fc-button-active-bg-color, #1a252f); */
+      //   border-color: #fd5b2c;
+      //   /* border-color: var(--fc-button-active-border-color, #151e27); */
+      //   opacity: 0.7;
+      // }
+
+      // /* tbody left time column - link*/
+      // .fc-timegrid-slot-label-cushion {
+      //   color: #fff;
+      // }
+
+     
+    </script>
+  </head>
+  <body>
+    <!-- just added the html from full-height calendar example -->
+    <!-- <div id="calendar-container">
+      <div id="calendar"></div>
+    </div> -->
+
+    
+    <!-- calendar one 5.0.3-->
+    <div id="loading">loading...</div>
+
+    <div id="calendar"></div>
+
+    <div style="display: none; z-index: 10; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                height:300px; max-width: 400px; background-color:coral; padding:50px;" 
+         id="fullCalModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+              <span class="sr-only">close</span>
+            </button> -->
+            <h4 id="modalTitle" class="modal-title"></h4>
+          </div>
+          <div id="modalBody1" class="modal-body">
+            <a id="locatUrl" target="_blank" style="color: rgb(0, 0, 0)"
+              >Join meeting</a
+            >
+          </div>
+          <div id="modalBody2" class="modal-body"></div>
+          <div class="modal-footer">
+            <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+            <button id="eventUrl" class="btn btn-primary">
+              Add to Your Google Calendar
+              <!-- <a onclick="mynewtab()" id="eventUrl" style="color: white"
+                >Add to Your Google Calendar</a
+              > -->
+            </button>
+            
+            <br>
+            <br>
+            <a id="eventlink" style="color: white; cursor:pointer; ">Right click then open in a new window</a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      //  function mynewtab() {
+         
+      //      window.open(newtabvar);
+      //      }
+    </script>
+
+    <!-- calendar two -->
+    <!-- <div id="loading">loading...</div>
+
+    <div id="calendarTwo"></div> -->
+    <!-- <a
+      href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=MTJodmhnaXR2M2p0ZDM3Njg3aWhxbWt0M3YgMzZhbTI4ZzZ1aXJxYnM0MnI4a3Q0anFpbThAZw&amp;tmsrc=36am28g6uirqbs42r8kt4jqim8@group.calendar.google.com&amp;catt=false&amp;pprop=HowCreated:DUPLICATE&amp;hl=en-GB&amp;scp=ONE"
+      style="whitespace: nowrap;"
+      >Add to my Google Calendar</a
+    > -->
+  </body>
+  
+  
 
     </div>
   </div>
