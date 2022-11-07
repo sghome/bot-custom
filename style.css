@@ -55,14 +55,14 @@ a:hover{
   opacity: 0.3;
   border-radius:5px;
   cursor:pointer;
-  color:rgba(0,0,0,0);
+  color:rgba(0,0,0);
 }
 #calendar-button:hover{
   color:#6f42c1;
 }
 #calendar-button:active{
-  background-color:#FFFFFF;
-  color:rgba(227,78,0,1);
+  background-color:#000000;
+  color:rgba(0,0,0);
 }
 
 .date-box{
