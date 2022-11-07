@@ -9,22 +9,22 @@
 }
 
 a{
-  color:rgba(0,0,0,0);
+  color:rgba(0,0,0);
   font-weight:bold;
 }
 
 a:visited{
   
-  color:rgba(0,0,0,0);
+  color:rgba(0,0,0);
 }
 
 a:hover{
-  color:rgba(0,0,0,0);
+  color:rgba(0,0,0);
   text-decoration:none;
 }
 
 .orange{
-  color:rgba(0,0,0,0);
+  color:rgba(0,0,0);
 }
 
 .e2{
